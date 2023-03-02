@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  worker:
+    image: web
+    container_name: worker
+    command: python server/backend.py
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - APP_SETTINGS=project.server.config.DevelopmentConfig
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.2-alpine
+    environment:
+      TZ: "${TZ:-America/New_York}"
